@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Vector2 targetVector;
+    private Vector2 _targetVector;
 
-    void Update()
+    private void Update()
     {
-        targetVector = transform.position - transform.right;
-        transform.position = Vector2.MoveTowards(transform.position, targetVector, 0.007f);
+        _targetVector = transform.position - transform.right;
+        transform.position = Vector2.MoveTowards(transform.position, _targetVector, 0.007f);
     }
    
     private void OnCollisionEnter2D(Collision2D collision)

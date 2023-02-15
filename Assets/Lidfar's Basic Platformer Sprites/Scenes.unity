@@ -2121,6 +2121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sound: {fileID: 8300000, guid: 2553e7d7c2aa64b48980422eeb157cb5, type: 3}
   _volumeStep: 0.01
+  _minVolume: 0
 --- !u!1001 &2058161914
 PrefabInstance:
   m_ObjectHideFlags: 0
