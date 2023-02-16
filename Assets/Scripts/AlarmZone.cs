@@ -11,6 +11,7 @@ public class AlarmZone : MonoBehaviour
     [SerializeField] private AudioClip _sound;
     [SerializeField] private float _volumeStep;
     [SerializeField] private float _minVolume;
+    [SerializeField] private float _maxVolume;
 
     private AudioSource _audioSource;
 
@@ -19,37 +20,24 @@ public class AlarmZone : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
+    public void Begin()
+    {
+        StartCoroutine(VolumeUp());
+    }
+   
     private IEnumerator VolumeUp()
     {
         _audioSource.PlayOneShot(_sound, _audioSource.volume);
         _audioSource.volume += _volumeStep;
-        yield return null;
-    }
-
-    private IEnumerator VolumeDown()
-    {
-        while (_audioSource.volume > _minVolume)
+        
+        if (_audioSource.volume == _maxVolume)
         {
-            _audioSource.volume -= _volumeStep;
-            yield return null;
-        }
-        StopCoroutine(VolumeDown());
-    }
-   
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<PlayerMovement>(out PlayerMovement player))
-        {
-            StartCoroutine(VolumeUp());
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<PlayerMovement>(out PlayerMovement player))
-        {
-            StopCoroutine(VolumeUp());
-            StartCoroutine(VolumeDown());
+            while (_audioSource.volume > _minVolume)
+            {
+                _audioSource.volume -= _volumeStep;
+                 yield return new WaitForSeconds(1.5f);
+            }
+        StopCoroutine(VolumeUp());
         }
     }
 }

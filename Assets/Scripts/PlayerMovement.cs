@@ -19,4 +19,12 @@ public class PlayerMovement : MonoBehaviour
             transform.Rotate(0, 180, 0);
         }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<AlarmZone>(out AlarmZone alarm))
+        {
+            alarm.Begin();
+        }
+    }
 }
