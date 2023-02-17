@@ -54,9 +54,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\OpenTheDoor.cs" />
-    <Compile Include="Assets\Scripts\AlarmZone.cs" />
     <Compile Include="Assets\Scripts\Chest.cs" />
+    <Compile Include="Assets\Scripts\DoorOpened.cs" />
+    <Compile Include="Assets\Scripts\Alarm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

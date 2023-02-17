@@ -22,9 +22,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<AlarmZone>(out AlarmZone alarm))
+        if (collision.TryGetComponent<Alarm>(out Alarm alarm))
         {
             alarm.Begin();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Alarm>(out Alarm alarm))
+        {
+            alarm.End();
         }
     }
 }
