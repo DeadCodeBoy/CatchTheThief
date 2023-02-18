@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _targetVector = transform.position - transform.right;
-        transform.position = Vector2.MoveTowards(transform.position, _targetVector, 0.007f);
+        transform.position = Vector2.MoveTowards(transform.position, _targetVector, 0.009f);
     }
    
     private void OnCollisionEnter2D(Collision2D collision)

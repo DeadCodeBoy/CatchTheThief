@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioClip _sound;
@@ -11,7 +13,7 @@ public class Alarm : MonoBehaviour
 
     private AudioSource _audioSource;
     private bool IsExit = false;
-    
+
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -21,7 +23,7 @@ public class Alarm : MonoBehaviour
     {
         StartCoroutine(VolumeUp());
     }
-    
+
     public void End()
     {
         IsExit = true;
@@ -31,14 +33,16 @@ public class Alarm : MonoBehaviour
     {
         var waitForSeconds = new WaitForSeconds(2f);
         _audioSource.PlayOneShot(_sound, _audioSource.volume);
-        _audioSource.volume += Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
-        yield return waitForSeconds;
        
-        if (IsExit==true)
-            {
-             _audioSource.volume -= Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
-             yield return waitForSeconds;
-            }
-        StopCoroutine(VolumeUp());
+        while (IsExit == false)
+        {
+            _audioSource.volume += Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
+            yield return waitForSeconds;
+        }
+        if (IsExit == true)
+        {
+            _audioSource.volume -= Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
+            yield return waitForSeconds;
+        }
     }
 }
