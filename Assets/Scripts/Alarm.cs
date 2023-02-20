@@ -12,7 +12,7 @@ public class Alarm : MonoBehaviour
     [SerializeField] private float _maxVolume;
 
     private AudioSource _audioSource;
-    private bool IsExit = false;
+    private bool _isExit = false;
 
     private void Start()
     {
@@ -21,27 +21,27 @@ public class Alarm : MonoBehaviour
 
     public void Begin()
     {
-        StartCoroutine(VolumeUp());
+        StartCoroutine(VolumeChange());
     }
 
     public void End()
     {
-        IsExit = true;
+        _isExit = true;
     }
 
-    private IEnumerator VolumeUp()
+    private IEnumerator VolumeChange()
     {
         var waitForSeconds = new WaitForSeconds(2f);
         _audioSource.PlayOneShot(_sound, _audioSource.volume);
        
-        while (IsExit == false)
+        while (_isExit == false)
         {
-            _audioSource.volume += Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _maxVolume, _volumeStep);
             yield return waitForSeconds;
         }
-        if (IsExit == true)
+        if (_isExit == true)
         {
-            _audioSource.volume -= Mathf.MoveTowards(_minVolume, _maxVolume, _volumeStep);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _minVolume, _volumeStep);
             yield return waitForSeconds;
         }
     }
