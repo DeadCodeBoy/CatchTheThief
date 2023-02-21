@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.TryGetComponent<Alarm>(out Alarm alarm))
         {
-            alarm.Begin();
+            alarm.Enter();
         }
     }
 
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.TryGetComponent<Alarm>(out Alarm alarm))
         {
-            alarm.End();
+            alarm.Exit();
         }
     }
 }

@@ -8,40 +8,32 @@ public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioClip _sound;
     [SerializeField] private float _volumeStep;
-    [SerializeField] private float _minVolume;
-    [SerializeField] private float _maxVolume;
-
+    
     private AudioSource _audioSource;
-    private bool _isExit = false;
 
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
     }
 
-    public void Begin()
+    public void Enter()
     {
-        StartCoroutine(VolumeChange());
+        StartCoroutine(VolumeChange(1f));
     }
 
-    public void End()
+    public void Exit()
     {
-        _isExit = true;
+        StartCoroutine(VolumeChange(0));
     }
 
-    private IEnumerator VolumeChange()
+    private IEnumerator VolumeChange(float targetVolume)
     {
-        var waitForSeconds = new WaitForSeconds(2f);
+        var waitForSeconds = new WaitForSeconds(targetVolume);
         _audioSource.PlayOneShot(_sound, _audioSource.volume);
-       
-        while (_isExit == false)
+
+        while (_audioSource.volume != targetVolume)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _maxVolume, _volumeStep);
-            yield return waitForSeconds;
-        }
-        if (_isExit == true)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _minVolume, _volumeStep);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _volumeStep);
             yield return waitForSeconds;
         }
     }
