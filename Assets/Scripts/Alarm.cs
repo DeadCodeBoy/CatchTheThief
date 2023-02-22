@@ -18,13 +18,13 @@ public class Alarm : MonoBehaviour
 
     public void Enter()
     {
-        StopAllCoroutines();
+        StopCoroutine(VolumeChange(0));
         StartCoroutine(VolumeChange(1f));
     }
 
     public void Exit()
     {
-        StopAllCoroutines();
+        StopCoroutine(VolumeChange(1f));
         StartCoroutine(VolumeChange(0));
     }
 
